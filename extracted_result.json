@@ -1,0 +1,27 @@
+{
+  "medicines": [
+    "amoxicillin",
+    "paracetamol",
+    "cetirizine",
+    "metformin",
+    "amlodipine",
+    "atorvastatin",
+    "pantoprazole",
+    "zolpidem",
+    "ibuprofen"
+  ],
+  "symptoms": [
+    "fever",
+    "sore throat",
+    "persistent fatigue",
+    "mild cough",
+    "nasal congestion",
+    "body aches",
+    "frequent sneezing",
+    "nasal irritation",
+    "elevated blood pressure",
+    "gastrointestinal irritation or reflux",
+    "insomnia",
+    "joint pain"
+  ]
+}

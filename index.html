@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Voice Recorder</title>
+</head>
+<body>
+  <h2>Record Your Voice</h2>
+  <button onclick="startRecording()">🎙 Start</button>
+  <button onclick="stopRecording()">🛑 Stop & Upload</button>
+
+  <script>
+    let mediaRecorder;
+    let audioChunks = [];
+
+    function startRecording() {
+      navigator.mediaDevices.getUserMedia({ audio: true })
+        .then(stream => {
+          mediaRecorder = new MediaRecorder(stream);
+          mediaRecorder.start();
+          audioChunks = [];
+
+          mediaRecorder.ondataavailable = event => {
+            audioChunks.push(event.data);
+          };
+
+          console.log("Recording started...");
+        });
+    }
+
+    function stopRecording() {
+      mediaRecorder.stop();
+      mediaRecorder.onstop = () => {
+        console.log("Recording stopped.");
+
+        const audioBlob = new Blob(audioChunks, { type: 'audio/mp3' });
+        const formData = new FormData();
+        formData.append('audio', audioBlob, 'voice.mp3');
+
+        fetch('/upload', {
+          method: 'POST',
+          body: formData
+        })
+        .then(res => res.json())
+        .then(data => {
+          alert("File uploaded successfully: " + data.filename);
+        })
+        .catch(err => {
+          alert("Upload failed: " + err);
+        });
+      };
+    }
+  </script>
+</body>
+</html>
